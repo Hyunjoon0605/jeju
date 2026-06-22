@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+<title>제주 출장 · 한국산학기술학회 2026 춘계</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10242c; --ink-soft:#3a525c;
+    --sea:#1f6b75; --sea-deep:#0d4a52;
+    --sun:#e08a3c; --sun-soft:#f2b873;
+    --sand:#f6f1e7; --paper:#fbf8f2;
+    --line:#d9cfbd; --mist:#eae3d4; --white:#fff;
+    --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    font-family:'Noto Sans KR',sans-serif;background:var(--sand);color:var(--ink);
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    padding-bottom:calc(62px + var(--safe-b));
+    width:100%;max-width:100%;overflow-x:hidden;
+  }
+  .wrap{padding:0 16px}
+
+  /* hero */
+  header.hero{
+    background:linear-gradient(165deg,#0d4a52,#1f6b75 60%,#2f8089);
+    color:var(--paper);padding:30px 16px 26px;position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-50px;top:-40px;width:190px;height:190px;border-radius:50%;
+    background:radial-gradient(circle,var(--sun-soft),var(--sun) 55%,transparent 72%);opacity:.85;
+  }
+  .hero .in{position:relative;z-index:2}
+  .eyebrow{font-family:'Space Grotesk',sans-serif;letter-spacing:.22em;text-transform:uppercase;
+    font-size:.62rem;color:var(--sun-soft);margin-bottom:10px}
+  .hero h1{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.72rem;line-height:1.25;margin-bottom:8px}
+  .hero .sub{font-size:.82rem;color:#cfe6e6;font-weight:300}
+  .hero-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .hero-chips span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+    border-radius:999px;padding:6px 12px;font-size:.72rem}
+  .hero-chips b{color:var(--sun-soft);font-family:'Space Grotesk',sans-serif;font-weight:500}
+  /* weather */
+  .wx-bar{display:flex;gap:7px;margin-top:16px}
+  .wx-card{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:11px;
+    padding:9px 7px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .wx-card .wx-day{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.66rem;color:var(--sun-soft)}
+  .wx-card .wx-ic{font-size:1.35rem;line-height:1.1}
+  .wx-card .wx-temp{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.74rem;color:var(--paper)}
+  .wx-card .wx-temp .lo{color:#a9cfd0}
+  .wx-card .wx-rain{font-size:.6rem;color:#bfe0df}
+  .wx-bar.loading .wx-card{opacity:.5}
+  .wx-note{font-size:.6rem;color:rgba(255,255,255,.5);margin-top:7px;font-family:'Space Grotesk',sans-serif}
+
+  /* section */
+  section{padding:26px 0 4px;scroll-margin-top:8px}
+  .sec-head{display:flex;align-items:baseline;gap:10px;padding:0 16px;margin-bottom:14px}
+  .sec-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.78rem;color:var(--sun)}
+  .sec-head h2{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.28rem}
+  .sec-head .note{margin-left:auto;font-size:.7rem;color:var(--ink-soft);font-weight:300}
+
+  /* day */
+  .day{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin:0 16px 16px;overflow:hidden}
+  .day-head{display:flex;align-items:center;gap:10px;padding:14px 16px 11px;border-bottom:1px solid var(--mist)}
+  .day-date{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.12rem;color:var(--sea-deep)}
+  .day-dow{font-size:.68rem;font-weight:500;color:var(--paper);background:var(--sea);border-radius:5px;padding:2px 8px}
+  .day-tag{margin-left:auto;font-size:.7rem;color:var(--ink-soft)}
+  .day-tag.tbd{color:var(--sun)}
+  .day-wx{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--ink-soft)}
+  .day-wx .di{font-size:.95rem}
+  .day-wx .dt{font-family:'Space Grotesk',sans-serif;font-weight:500;color:var(--sea-deep)}
+  .day-wx .dr{color:var(--sun);font-size:.64rem}
+  .day-head .day-tag.has-wx{display:none}
+  .ev{display:grid;grid-template-columns:74px 1fr;gap:10px;padding:11px 16px;border-bottom:1px solid #efe8da}
+  .ev:last-child{border-bottom:none}
+  .ev .t{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.78rem;color:var(--sea);padding-top:1px}
+  .ev .t.tbd{color:var(--sun)}
+  .ev .w{font-size:.88rem;font-weight:500}
+  .ev .m{font-size:.74rem;color:var(--ink-soft);font-weight:300;margin-top:2px}
+  .ev .m .pill{display:inline-block;background:var(--mist);border-radius:4px;padding:1px 7px;margin-right:5px;font-size:.68rem;color:var(--sea-deep)}
+  .ev.move{background:linear-gradient(90deg,rgba(31,107,117,.05),transparent 65%)}
+  .ev.meal{background:linear-gradient(90deg,rgba(224,138,60,.07),transparent 65%)}
+  .ev.hl .w{color:var(--sea-deep)}
+
+  /* 주요 방문지 */
+  .places-card{margin:0 16px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
+  .places-desc{font-size:.84rem;color:var(--ink-soft);font-weight:300;line-height:1.55;margin-bottom:16px}
+  .places-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+    background:#03c75a;color:#fff;font-size:.96rem;font-weight:600;text-decoration:none;border-radius:12px;padding:15px}
+  .places-btn:active{background:#02a94c}
+  .places-btn .nv{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+    background:#fff;color:#03c75a;border-radius:5px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.82rem}
+  .places-hint{font-size:.72rem;color:#b0a48d;font-weight:300;margin-top:12px;text-align:center}
+
+  /* lodging */
+  .lodge{margin:0 16px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .lodge-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
+  .lodge-top h3{font-family:'Gowun Batang',serif;font-size:1.15rem}
+  .lodge-top .bld{background:var(--sea-deep);color:var(--paper);font-size:.66rem;padding:2px 9px;border-radius:5px;
+    font-family:'Space Grotesk',sans-serif;font-weight:500}
+  .lodge-top a.lk{margin-left:auto;font-size:.74rem;color:var(--sea);text-decoration:none;border-bottom:1px dotted var(--sea)}
+  .lodge-note{font-size:.74rem;color:var(--ink-soft);font-weight:300;margin-bottom:14px}
+  .room{border:1px solid var(--mist);border-radius:11px;padding:12px 14px;margin-bottom:9px;background:linear-gradient(160deg,#fffdf8,var(--paper))}
+  .room:last-child{margin-bottom:0}
+  .room .rn{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--sea-deep);font-size:.92rem;display:flex;align-items:center;gap:7px;margin-bottom:6px}
+  .room .rn .dot{width:8px;height:8px;border-radius:50%;background:var(--sun)}
+  .room .g{font-size:.85rem;display:inline-block;margin-right:12px}
+  .room .g::before{content:"·";color:var(--sun);font-weight:700;margin-right:6px}
+
+  /* flight */
+  .bp-note{margin:0 16px 14px;display:flex;gap:9px;align-items:flex-start;background:#fff8ec;
+    border:1px solid #f0e0c4;border-radius:11px;padding:11px 13px;font-size:.74rem;color:#7a5e2a;font-weight:300;line-height:1.5}
+  .bp-note .bp-ic{font-size:.9rem;flex-shrink:0;margin-top:1px}
+  .bp-note b{font-weight:600;color:#6e5320}
+  .fl-blk{margin:0 16px 18px}
+  .fl-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+  .fl-h .dir{font-family:'Gowun Batang',serif;font-size:1.02rem;font-weight:700}
+  .fl-h .rt{font-family:'Space Grotesk',sans-serif;font-size:.72rem;color:var(--paper);background:var(--sea);padding:3px 9px;border-radius:5px;font-weight:500}
+  .fl-h .dt{font-size:.7rem;color:var(--ink-soft);font-weight:300;width:100%}
+  .pax{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .pax .px-name{font-weight:500;font-size:.92rem;min-width:52px}
+  .pax .px-meta{font-size:.7rem;color:var(--ink-soft);font-weight:300;flex:1}
+  .pax .px-meta .c{color:var(--sun);font-weight:500}
+  .pax .px-meta .pnr{font-family:'Space Grotesk',sans-serif;color:var(--sea);letter-spacing:.03em}
+  .pax .px-amt{font-family:'Space Grotesk',sans-serif;font-size:.8rem;font-weight:500;text-align:right;min-width:52px}
+  .px-btns{display:flex;flex-direction:column;gap:5px}
+  .tkbtn,.bpbtn{font-family:'Space Grotesk',sans-serif;font-size:.72rem;font-weight:600;white-space:nowrap;
+    border:none;border-radius:7px;padding:8px 13px;cursor:pointer;text-align:center;text-decoration:none;display:block}
+  .tkbtn{background:var(--sea);color:var(--paper)}
+  .tkbtn:active{filter:brightness(.92)}
+  .bpbtn{color:var(--paper)}
+  .bpbtn:active{filter:brightness(.92)}
+  .bpbtn.checking{background:var(--mist);color:#9a8e76;cursor:default}
+  .bpbtn.pending{background:#efe3cf;color:#b08a4a}
+  .bpbtn.ready{background:var(--sun)}
+  .fl-sum{font-size:.74rem;color:var(--ink-soft);font-weight:300;text-align:right;margin-top:2px}
+  .fl-sum b{font-family:'Space Grotesk',sans-serif;color:var(--sea-deep)}
+
+  /* conf */
+  .conf{margin:0 16px;background:linear-gradient(160deg,var(--sea-deep),var(--sea));color:var(--paper);border-radius:14px;padding:18px}
+  .conf h3{font-family:'Gowun Batang',serif;font-size:1.15rem;margin-bottom:4px}
+  .conf .th{color:#cfe6e6;font-size:.76rem;font-weight:300;margin-bottom:14px}
+  .conf .ci{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.15);font-size:.8rem}
+  .conf .ci .k{color:var(--sun-soft);font-family:'Space Grotesk',sans-serif;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+  .conf .ci .v{text-align:right}
+  .conf-days{margin-top:14px;display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.16);border-radius:9px;overflow:hidden}
+  .conf-days .cd{background:var(--sea-deep);padding:10px 13px;display:flex;justify-content:space-between;align-items:center}
+  .conf-days .cd .d{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--sun-soft);font-size:.84rem}
+  .conf-days .cd .t{font-size:.74rem;color:#d6e9e9;font-weight:300}
+
+  footer{padding:26px 16px calc(20px + var(--safe-b));text-align:center;color:var(--ink-soft);font-size:.72rem;font-weight:300}
+  footer .crest{font-family:'Gowun Batang',serif;color:var(--sea-deep);font-size:.92rem;margin-bottom:4px}
+
+  /* bottom tabs */
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(251,248,242,.96);
+    backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding-bottom:var(--safe-b);max-width:100%;overflow:hidden}
+  nav.tabs a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 8px;
+    text-decoration:none;color:var(--ink-soft);font-size:.6rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  nav.tabs a .ic{font-size:1.05rem;line-height:1}
+  nav.tabs a.active{color:var(--sea-deep)}
+  nav.tabs a.active .ic{transform:translateY(-1px)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="in">
+    <div class="eyebrow">Jeju · 2026.06.24–06.26</div>
+    <h1>제주 출장 일정</h1>
+    <p class="sub">한국산학기술학회 춘계학술대회 · 군집 연구팀 6인</p>
+    <div class="hero-chips">
+      <span><b>장소</b> 한라대 한라컨벤션센터</span>
+      <span><b>주제</b> AI·산학연 융복합 III</span>
+      <span><b>인원</b> 6인</span>
+    </div>
+    <div class="wx-bar loading" id="wxBar">
+      <div class="wx-card" data-date="2026-06-24"><span class="wx-day">6.24 수</span><span class="wx-ic">··</span><span class="wx-temp">…</span><span class="wx-rain"></span></div>
+      <div class="wx-card" data-date="2026-06-25"><span class="wx-day">6.25 목</span><span class="wx-ic">··</span><span class="wx-temp">…</span><span class="wx-rain"></span></div>
+      <div class="wx-card" data-date="2026-06-26"><span class="wx-day">6.26 금</span><span class="wx-ic">··</span><span class="wx-temp">…</span><span class="wx-rain"></span></div>
+    </div>
+    <div class="wx-note" id="wxNote">날씨 · Open-Meteo (실시간)</div>
+  </div>
+</header>
+
+<!-- 일정 -->
+<section id="sched">
+  <div class="sec-head"><span class="sec-num">01</span><h2>일정표</h2><span class="note">3일</span></div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">06.24</span><span class="day-dow">수</span><span class="day-tag">이동 + KCC</span><span class="day-wx" data-wxdate="2026-06-24"></span></div>
+    <div class="ev move"><span class="t">10:00<br>11:30</span><div><div class="w">육사 → 김포공항</div><div class="m"><span class="pill">밴</span>1시간 30분 · 서울 70자 2604</div></div></div>
+    <div class="ev meal"><span class="t">11:30<br>13:25</span><div><div class="w">점심 식사 · 탑승 수속</div></div></div>
+    <div class="ev move hl"><span class="t">13:25<br>14:40</span><div><div class="w">김포 → 제주</div><div class="m"><span class="pill">KE1121</span>1시간 15분</div></div></div>
+    <div class="ev move"><span class="t">15:00<br>15:20</span><div><div class="w">렌터카 수령</div><div class="m"><span class="pill">롯데렌터카</span>셔틀</div></div></div>
+    <div class="ev move"><span class="t">15:30<br>16:30</span><div><div class="w">제주공항 → 제주 ICC</div><div class="m"><span class="pill">차량</span>서귀포·약 1시간</div></div></div>
+    <div class="ev hl"><span class="t">16:30<br>17:30</span><div><div class="w">KCC 참관</div><div class="m">제주 ICC</div></div></div>
+    <div class="ev move"><span class="t">17:30<br>18:20</span><div><div class="w">애월 / 식당 이동</div></div></div>
+    <div class="ev meal"><span class="t">18:20<br>21:00</span><div><div class="w">저녁 식사 · 일몰</div></div></div>
+    <div class="ev"><span class="t">21:00~</span><div><div class="w">숙소 체크인</div><div class="m">리조트 산수휴 · A동</div></div></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">06.25</span><span class="day-dow">목</span><span class="day-tag tbd">학회 본행사</span><span class="day-wx" data-wxdate="2026-06-25"></span></div>
+    <div class="ev"><span class="t">10:00<br>12:00</span><div><div class="w">축구 시청</div></div></div>
+    <div class="ev meal"><span class="t">12:00<br>13:00</span><div><div class="w">점심 식사</div></div></div>
+    <div class="ev hl"><span class="t tbd">미정</span><div><div class="w">춘계학술대회 — 구두발표·특별세션</div><div class="m">한라대 한라컨벤션센터</div></div></div>
+    <div class="ev meal"><span class="t tbd">미정</span><div><div class="w">저녁 식사</div></div></div>
+    <div class="ev"><span class="t tbd">미정</span><div><div class="w">숙소 이동·체크인</div></div></div>
+  </div>
+
+  <div class="day">
+    <div class="day-head"><span class="day-date">06.26</span><span class="day-dow">금</span><span class="day-tag">발표 + 복귀</span><span class="day-wx" data-wxdate="2026-06-26"></span></div>
+    <div class="ev hl"><span class="t">09:00<br>12:00</span><div><div class="w">춘계학술대회 — 포스터 발표</div><div class="m"><span class="pill">한라대</span>숙소 약 10분</div></div></div>
+    <div class="ev meal"><span class="t">12:00<br>14:00</span><div><div class="w">점심 식사</div></div></div>
+    <div class="ev move"><span class="t">14:00<br>14:30</span><div><div class="w">렌터카 반납</div></div></div>
+    <div class="ev move hl"><span class="t">15:30<br>16:50</span><div><div class="w">제주 → 김포</div><div class="m"><span class="pill">KE1246</span></div></div></div>
+    <div class="ev move"><span class="t">16:50<br>19:00</span><div><div class="w">김포공항 → 육사</div></div></div>
+  </div>
+</section>
+
+<!-- 주요 방문지 -->
+<section id="places">
+  <div class="sec-head"><span class="sec-num">02</span><h2>주요 방문지</h2><span class="note">네이버 지도</span></div>
+  <div class="places-card">
+    <p class="places-desc">식사·카페·일몰 명소·동선은 네이버 지도 즐겨찾기로 정리했습니다. 아래 버튼을 누르면 지도 앱에서 저장된 장소를 한눈에 볼 수 있습니다.</p>
+    <a class="places-btn" href="https://naver.me/5eDr5zhx" target="_blank" rel="noopener"><span class="nv">N</span>네이버 지도에서 열기</a>
+    <p class="places-hint">제주공항 · ICC · 애월 · 숙소 · 한라대 등 방문 예정지가 즐겨찾기로 공유되어 있습니다.</p>
+  </div>
+</section>
+
+<!-- 숙소 -->
+<section id="lodge">
+  <div class="sec-head"><span class="sec-num">03</span><h2>숙소</h2><span class="note">A동 · 6인</span></div>
+  <div class="lodge">
+    <div class="lodge-top"><h3>리조트 산수휴</h3><span class="bld">A동 전체</span><a class="lk" href="https://xn--zf4buzh77b.com/royal" target="_blank" rel="noopener">페이지 →</a></div>
+    <p class="lodge-note">한 건물(A동) 3개 객실 · 06.24(수) 체크인</p>
+    <div class="room"><div class="rn"><span class="dot"></span>로얄룸</div><span class="g">조성식 교수</span><span class="g">백승원 교수</span></div>
+    <div class="room"><div class="rn"><span class="dot"></span>스위트룸 1</div><span class="g">신지윤 교수</span><span class="g">김현준 교수</span></div>
+    <div class="room"><div class="rn"><span class="dot"></span>스위트룸 2</div><span class="g">김상수 교수</span><span class="g">성호용 교수</span></div>
+  </div>
+</section>
+
+<!-- 항공편 -->
+<section id="flight">
+  <div class="sec-head"><span class="sec-num">04</span><h2>항공편</h2><span class="note">E-티켓·탑승권</span></div>
+  <div class="bp-note">
+    <span class="bp-ic">ℹ️</span>
+    <span><b>E-티켓</b>은 예약 증빙(항상 열림). <b>탑승권</b>은 출발 24시간 전부터 등록되며, 등록 전에는 '발권 전'으로 표시됩니다.</span>
+  </div>
+
+  <div class="fl-blk">
+    <div class="fl-h"><span class="dir">출발편</span><span class="rt">김포 → 제주</span><span class="dt">06.24(수) · KE1121 · 13:25–14:40</span></div>
+    <div class="pax"><span class="px-name">백승원</span><span class="px-meta">일반석(Y) · <span class="pnr">E2DFZJ</span></span><span class="px-amt">124,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_백승원_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_백승원_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">성호용</span><span class="px-meta">일반석(Y) · <span class="pnr">E2DFZJ</span></span><span class="px-amt">124,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_성호용_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_성호용_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">김상수</span><span class="px-meta">일반석(Y) · <span class="pnr">E2DFZJ</span></span><span class="px-amt">124,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_김상수_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_김상수_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">김현준</span><span class="px-meta">일반석(Y) · <span class="pnr">E2DFZJ</span></span><span class="px-amt">124,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_김현준_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_김현준_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">조성식</span><span class="px-meta"><span class="c">프레스티지(C)</span> · <span class="pnr">E2COH4</span></span><span class="px-amt">184,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_조성식_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_조성식_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
+    <div class="fl-sum">합계 <b>680,500원</b></div>
+  </div>
+
+  <div class="fl-blk">
+    <div class="fl-h"><span class="dir">복귀편</span><span class="rt">제주 → 김포</span><span class="dt">06.26(금) · KE1246 · 15:30–16:50</span></div>
+    <div class="pax"><span class="px-name">백승원</span><span class="px-meta">일반석(Y) · <span class="pnr">E2IXZH</span></span><span class="px-amt">138,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_백승원_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_백승원_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">성호용</span><span class="px-meta">일반석(Y) · <span class="pnr">E2IXZH</span></span><span class="px-amt">138,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_성호용_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_성호용_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">김상수</span><span class="px-meta">일반석(Y) · <span class="pnr">E2IXZH</span></span><span class="px-amt">138,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_김상수_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_김상수_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">김현준</span><span class="px-meta">일반석(Y) · <span class="pnr">E2IXZH</span></span><span class="px-amt">138,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_김현준_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_김현준_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
+    <div class="pax"><span class="px-name">조성식</span><span class="px-meta"><span class="c">프레스티지(C)</span> · <span class="pnr">DJEGE8</span></span><span class="px-amt">198,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_조성식_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_조성식_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
+    <div class="fl-sum">합계 <b>750,500원</b></div>
+  </div>
+</section>
+
+<!-- 학회 -->
+<section id="conf">
+  <div class="sec-head"><span class="sec-num">05</span><h2>학회 정보</h2></div>
+  <div class="conf">
+    <h3>2026 한국산학기술학회 춘계학술대회</h3>
+    <p class="th">인공지능기술활용과 산학연 융·복합기술 III</p>
+    <div class="ci"><span class="k">일시</span><span class="v">2026.06.25–06.26</span></div>
+    <div class="ci"><span class="k">장소</span><span class="v">제주 한라대 한라컨벤션센터</span></div>
+    <div class="ci"><span class="k">사무국</span><span class="v">041-565-9561</span></div>
+    <div class="ci"><span class="k">E-mail</span><span class="v">kais@kais99.or.kr</span></div>
+    <div class="conf-days">
+      <div class="cd"><span class="d">6.25 목</span><span class="t">구두발표·특별세션</span></div>
+      <div class="cd"><span class="d">6.26 금</span><span class="t">구두·포스터발표</span></div>
+      <div class="cd"><span class="d">6.27 토</span><span class="t">내부 워크숍</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="crest">제주 출장 일정</div>
+  <div>조성식 · 백승원 · 신지윤 · 김상수 · 성호용 · 김현준</div>
+</footer>
+
+<nav class="tabs">
+  <a href="#sched" class="active"><span class="ic">🗓️</span>일정</a>
+  <a href="#places"><span class="ic">📍</span>방문지</a>
+  <a href="#lodge"><span class="ic">🏨</span>숙소</a>
+  <a href="#flight"><span class="ic">✈️</span>항공</a>
+  <a href="#conf"><span class="ic">🎓</span>학회</a>
+</nav>
+
+<script>
+/* ---- weather (Open-Meteo, live) ---- */
+(function(){
+  const LAT=33.2462, LON=126.5619;
+  const wmo=(c)=>{
+    if(c===0) return ['☀️','맑음'];
+    if([1,2].includes(c)) return ['🌤️','대체로 맑음'];
+    if(c===3) return ['☁️','흐림'];
+    if([45,48].includes(c)) return ['🌫️','안개'];
+    if([51,53,55,56,57].includes(c)) return ['🌦️','이슬비'];
+    if([61,63,65,80,81,82].includes(c)) return ['🌧️','비'];
+    if([66,67].includes(c)) return ['🌧️','진눈깨비'];
+    if([71,73,75,77,85,86].includes(c)) return ['🌨️','눈'];
+    if([95,96,99].includes(c)) return ['⛈️','뇌우'];
+    return ['🌡️','—'];
+  };
+  const url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+    +'&timezone=Asia%2FSeoul&start_date=2026-06-24&end_date=2026-06-26';
+  const bar=document.getElementById('wxBar');
+  const note=document.getElementById('wxNote');
+  fetch(url).then(r=>{ if(!r.ok) throw new Error('http'); return r.json(); }).then(d=>{
+    const D=d.daily; if(!D||!D.time) throw new Error('nodata');
+    const map={};
+    D.time.forEach((t,i)=>{ map[t]={code:D.weather_code[i],hi:D.temperature_2m_max[i],lo:D.temperature_2m_min[i],rain:D.precipitation_probability_max[i]}; });
+    bar.classList.remove('loading');
+    bar.querySelectorAll('.wx-card').forEach(card=>{
+      const w=map[card.getAttribute('data-date')]; if(!w) return;
+      const [ic]=wmo(w.code);
+      card.querySelector('.wx-ic').textContent=ic;
+      card.querySelector('.wx-temp').innerHTML=Math.round(w.hi)+'° <span class="lo">/'+Math.round(w.lo)+'°</span>';
+      card.querySelector('.wx-rain').textContent='강수 '+(w.rain==null?'-':w.rain+'%');
+    });
+    document.querySelectorAll('.day-wx').forEach(el=>{
+      const w=map[el.getAttribute('data-wxdate')]; if(!w) return;
+      const [ic]=wmo(w.code);
+      el.innerHTML='<span class="di">'+ic+'</span><span class="dt">'+Math.round(w.hi)+'°/'+Math.round(w.lo)+'°</span><span class="dr">'+(w.rain==null?'':w.rain+'%')+'</span>';
+      const tag=el.parentElement.querySelector('.day-tag'); if(tag) tag.classList.add('has-wx');
+    });
+    const now=new Date();
+    note.textContent='날씨 · Open-Meteo · '+(now.getMonth()+1)+'/'+now.getDate()+' 업데이트';
+  }).catch(()=>{
+    bar.classList.remove('loading');
+    bar.querySelectorAll('.wx-temp').forEach(t=>t.textContent='—');
+    bar.querySelectorAll('.wx-ic').forEach(i=>i.textContent='🌐');
+    bar.querySelectorAll('.wx-rain').forEach(r=>r.textContent='오프라인');
+    note.textContent='날씨 정보를 불러올 수 없습니다 (인터넷 필요)';
+  });
+})();
+
+/* ---- boarding pass (boarding/ 폴더, 24h check) ---- */
+(function(){
+  const BP_BASE='boarding/';
+  const H=60*60*1000;
+  function fmtKST(depISO){
+    const d=new Date(depISO);
+    const open=new Date(d.getTime()-24*H);
+    const mm=open.getMonth()+1, dd=open.getDate();
+    let hh=open.getHours(); const ap=hh<12?'오전':'오후'; hh=hh%12||12;
+    const mi=String(open.getMinutes()).padStart(2,'0');
+    return mm+'/'+dd+' '+ap+' '+hh+':'+mi;
+  }
+  document.querySelectorAll('.bpbtn').forEach(btn=>{
+    const file=btn.getAttribute('data-bp')+'.pdf';
+    const dep=btn.getAttribute('data-dep');
+    const url=BP_BASE+encodeURIComponent(file);
+    const now=new Date();
+    const opensAt=new Date(new Date(dep).getTime()-24*H);
+    const before24h = now < opensAt;
+    btn.classList.add('checking'); btn.textContent='확인 중';
+    const probe=fetch(url,{method:'HEAD',cache:'no-store'}).then(r=>r.ok)
+      .catch(()=>fetch(url,{method:'GET',cache:'no-store'}).then(r=>r.ok).catch(()=>false));
+    probe.then(exists=>{
+      btn.classList.remove('checking');
+      if(exists){
+        btn.classList.add('ready'); btn.textContent='탑승권';
+        btn.addEventListener('click',()=>window.open(url,'_blank','noopener'));
+      } else {
+        btn.classList.add('pending'); btn.textContent='발권 전';
+        btn.addEventListener('click',()=>{
+          alert(before24h
+            ? '탑승권 발권 전입니다.\n출발 24시간 전('+fmtKST(dep)+')부터 등록 예정입니다.'
+            : '탑승권이 아직 등록되지 않았습니다.\n메일로 받은 탑승권을 boarding 폴더에 올리면 여기서 바로 열립니다.');
+        });
+      }
+    });
+  });
+})();
+
+/* ---- bottom tab active on scroll ---- */
+(function(){
+  const tabLinks=[...document.querySelectorAll('nav.tabs a')];
+  const tabTargets=tabLinks.map(a=>document.querySelector(a.getAttribute('href')));
+  const io=new IntersectionObserver((ents)=>{
+    ents.forEach(en=>{ if(en.isIntersecting){
+      const id='#'+en.target.id;
+      tabLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));
+    }});
+  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  tabTargets.forEach(t=>{ if(t) io.observe(t); });
+})();
+</script>
+
+</body>
+</html>
