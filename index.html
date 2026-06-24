@@ -178,7 +178,7 @@
     display:flex;align-items:center;justify-content:center}
   .bp-lb-stage img{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;
     box-shadow:0 10px 40px rgba(0,0,0,.5);background:#fff;
-    transform-origin:0 0;will-change:transform;user-select:none;-webkit-user-drag:none;touch-action:none}
+    transform-origin:center center;will-change:transform;user-select:none;-webkit-user-drag:none;touch-action:none}
   .bp-lb-hint{text-align:center;color:rgba(255,255,255,.6);font-size:.7rem;font-weight:300;
     padding:12px 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));flex-shrink:0}
 </style>
@@ -402,17 +402,30 @@
   const lbName=document.getElementById('bpName');
   const lbStage=lbImg.parentElement; // .bp-lb-stage
 
-  // 줌/패닝 상태
+  // 줌/패닝 상태 (transform-origin: center 기준)
   let scale=1, tx=0, ty=0;
   const MINS=1, MAXS=5;
   function applyT(){ lbImg.style.transform='translate('+tx+'px,'+ty+'px) scale('+scale+')'; }
   function resetT(){ scale=1; tx=0; ty=0; lbImg.style.transition='none'; applyT(); }
   function clampPan(){
-    // 확대 시 이미지가 화면 밖으로 너무 빠지지 않게 약하게 제한
     const st=lbStage.getBoundingClientRect();
     const iw=lbImg.clientWidth*scale, ih=lbImg.clientHeight*scale;
-    const maxX=Math.max(0,(iw-st.width)/2)+40, maxY=Math.max(0,(ih-st.height)/2)+40;
+    const maxX=Math.max(0,(iw-st.width)/2)+30, maxY=Math.max(0,(ih-st.height)/2)+30;
     tx=Math.max(-maxX,Math.min(maxX,tx)); ty=Math.max(-maxY,Math.min(maxY,ty));
+  }
+  // 특정 화면좌표(focal)를 중심으로 scale을 newScale로 변경
+  function zoomTo(newScale, fx, fy){
+    newScale=Math.max(MINS,Math.min(MAXS,newScale));
+    const st=lbStage.getBoundingClientRect();
+    // 스테이지 중심 기준 focal 위치
+    const cx=st.left+st.width/2, cy=st.top+st.height/2;
+    const ox=(fx-cx), oy=(fy-cy);   // 중심에서 focal까지 거리(화면)
+    // 현재 focal이 가리키는 이미지상의 점이 확대 후에도 같은 화면위치에 오도록 tx,ty 보정
+    const ratio=newScale/scale;
+    tx = ox - (ox - tx)*ratio;
+    ty = oy - (oy - ty)*ratio;
+    scale=newScale;
+    clampPan(); applyT();
   }
 
   function openLB(src,title){
@@ -422,31 +435,30 @@
   }
   function closeLB(){ lb.classList.remove('open'); document.body.style.overflow=''; lbImg.src=''; resetT(); }
   document.getElementById('bpClose').addEventListener('click',closeLB);
-  // 배경(스테이지 밖) 클릭 시 닫기 — 단, 확대 중이면 닫지 않음
   lb.addEventListener('click',e=>{ if(e.target===lb && scale===1) closeLB(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLB(); });
 
-  // --- 더블탭 확대/축소 ---
-  let lastTap=0;
+  // --- 더블탭: 탭한 지점 기준 확대/축소 ---
+  let lastTap=0, lastX=0, lastY=0;
   lbStage.addEventListener('click',e=>{
     const now=Date.now();
-    if(now-lastTap<300){
-      lbImg.style.transition='transform .2s ease';
-      if(scale>1){ resetT(); lbImg.style.transition='transform .2s ease'; applyT(); }
-      else{ scale=2.5; clampPan(); applyT(); }
+    if(now-lastTap<300 && Math.abs(e.clientX-lastX)<30 && Math.abs(e.clientY-lastY)<30){
+      lbImg.style.transition='transform .22s ease';
+      if(scale>1.05){ resetT(); lbImg.style.transition='transform .22s ease'; applyT(); }
+      else{ zoomTo(2.6, e.clientX, e.clientY); }
       e.preventDefault();
     }
-    lastTap=now;
+    lastTap=now; lastX=e.clientX; lastY=e.clientY;
   });
 
-  // --- 핀치 줌 + 드래그 패닝 (터치) ---
+  // --- 핀치 줌(두 손가락 중간점 기준) + 드래그 패닝 ---
   let pinchStart=0, startScale=1, panX=0, panY=0, startTx=0, startTy=0, dragging=false;
   function dist(t){ const dx=t[0].clientX-t[1].clientX, dy=t[0].clientY-t[1].clientY; return Math.hypot(dx,dy); }
-  function mid(t){ return {x:(t[0].clientX+t[1].clientX)/2, y:(t[0].clientY+t[1].clientY)/2}; }
 
   lbStage.addEventListener('touchstart',e=>{
     if(e.touches.length===2){
-      pinchStart=dist(e.touches); startScale=scale; e.preventDefault();
+      pinchStart=dist(e.touches); startScale=scale;
+      lbImg.style.transition='none'; e.preventDefault();
     } else if(e.touches.length===1 && scale>1){
       dragging=true; panX=e.touches[0].clientX; panY=e.touches[0].clientY; startTx=tx; startTy=ty;
     }
@@ -455,8 +467,11 @@
   lbStage.addEventListener('touchmove',e=>{
     if(e.touches.length===2 && pinchStart>0){
       const r=dist(e.touches)/pinchStart;
-      scale=Math.max(MINS,Math.min(MAXS,startScale*r));
-      lbImg.style.transition='none'; clampPan(); applyT(); e.preventDefault();
+      const fx=(e.touches[0].clientX+e.touches[1].clientX)/2;
+      const fy=(e.touches[0].clientY+e.touches[1].clientY)/2;
+      lbImg.style.transition='none';
+      zoomTo(startScale*r, fx, fy);
+      e.preventDefault();
     } else if(dragging && e.touches.length===1){
       tx=startTx+(e.touches[0].clientX-panX);
       ty=startTy+(e.touches[0].clientY-panY);
@@ -466,7 +481,7 @@
 
   lbStage.addEventListener('touchend',e=>{
     if(e.touches.length<2) pinchStart=0;
-    if(e.touches.length===0){ dragging=false; if(scale<1.02) resetT(); }
+    if(e.touches.length===0){ dragging=false; if(scale<1.03) resetT(); }
   });
 
   document.querySelectorAll('.bpbtn').forEach(btn=>{
