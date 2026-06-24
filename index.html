@@ -25,7 +25,7 @@
     width:100%;max-width:100%;overflow-x:hidden;
   }
   .wrap{padding:0 16px}
-
+ 
   /* hero */
   header.hero{
     background:linear-gradient(165deg,#0d4a52,#1f6b75 60%,#2f8089);
@@ -55,14 +55,14 @@
   .wx-card .wx-rain{font-size:.6rem;color:#bfe0df}
   .wx-bar.loading .wx-card{opacity:.5}
   .wx-note{font-size:.6rem;color:rgba(255,255,255,.5);margin-top:7px;font-family:'Space Grotesk',sans-serif}
-
+ 
   /* section */
   section{padding:26px 0 4px;scroll-margin-top:8px}
   .sec-head{display:flex;align-items:baseline;gap:10px;padding:0 16px;margin-bottom:14px}
   .sec-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.78rem;color:var(--sun)}
   .sec-head h2{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.28rem}
   .sec-head .note{margin-left:auto;font-size:.7rem;color:var(--ink-soft);font-weight:300}
-
+ 
   /* day */
   .day{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin:0 16px 16px;overflow:hidden}
   .day-head{display:flex;align-items:center;gap:10px;padding:14px 16px 11px;border-bottom:1px solid var(--mist)}
@@ -85,7 +85,7 @@
   .ev.move{background:linear-gradient(90deg,rgba(31,107,117,.05),transparent 65%)}
   .ev.meal{background:linear-gradient(90deg,rgba(224,138,60,.07),transparent 65%)}
   .ev.hl .w{color:var(--sea-deep)}
-
+ 
   /* 주요 방문지 */
   .places-card{margin:0 16px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 16px}
   .places-desc{font-size:.84rem;color:var(--ink-soft);font-weight:300;line-height:1.55;margin-bottom:16px}
@@ -95,7 +95,7 @@
   .places-btn .nv{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
     background:#fff;color:#03c75a;border-radius:5px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.82rem}
   .places-hint{font-size:.72rem;color:#b0a48d;font-weight:300;margin-top:12px;text-align:center}
-
+ 
   /* lodging */
   .lodge{margin:0 16px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
   .lodge-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
@@ -110,7 +110,7 @@
   .room .rn .dot{width:8px;height:8px;border-radius:50%;background:var(--sun)}
   .room .g{font-size:.85rem;display:inline-block;margin-right:12px}
   .room .g::before{content:"·";color:var(--sun);font-weight:700;margin-right:6px}
-
+ 
   /* flight */
   .bp-note{margin:0 16px 14px;display:flex;gap:9px;align-items:flex-start;background:#fff8ec;
     border:1px solid #f0e0c4;border-radius:11px;padding:11px 13px;font-size:.74rem;color:#7a5e2a;font-weight:300;line-height:1.5}
@@ -139,7 +139,7 @@
   .bpbtn.ready{background:var(--sun)}
   .fl-sum{font-size:.74rem;color:var(--ink-soft);font-weight:300;text-align:right;margin-top:2px}
   .fl-sum b{font-family:'Space Grotesk',sans-serif;color:var(--sea-deep)}
-
+ 
   /* conf */
   .conf{margin:0 16px;background:linear-gradient(160deg,var(--sea-deep),var(--sea));color:var(--paper);border-radius:14px;padding:18px}
   .conf h3{font-family:'Gowun Batang',serif;font-size:1.15rem;margin-bottom:4px}
@@ -151,10 +151,10 @@
   .conf-days .cd{background:var(--sea-deep);padding:10px 13px;display:flex;justify-content:space-between;align-items:center}
   .conf-days .cd .d{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--sun-soft);font-size:.84rem}
   .conf-days .cd .t{font-size:.74rem;color:#d6e9e9;font-weight:300}
-
+ 
   footer{padding:26px 16px calc(20px + var(--safe-b));text-align:center;color:var(--ink-soft);font-size:.72rem;font-weight:300}
   footer .crest{font-family:'Gowun Batang',serif;color:var(--sea-deep);font-size:.92rem;margin-bottom:4px}
-
+ 
   /* bottom tabs */
   nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(251,248,242,.96);
     backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;padding-bottom:var(--safe-b);max-width:100%;overflow:hidden}
@@ -163,10 +163,26 @@
   nav.tabs a .ic{font-size:1.05rem;line-height:1}
   nav.tabs a.active{color:var(--sea-deep)}
   nav.tabs a.active .ic{transform:translateY(-1px)}
+ 
+  /* 탑승권 팝업 (lightbox) */
+  .bp-lightbox{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;
+    background:rgba(13,36,44,.92);backdrop-filter:blur(4px)}
+  .bp-lightbox.open{display:flex}
+  .bp-lb-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;
+    padding-top:calc(14px + env(safe-area-inset-top,0px));color:#fff;flex-shrink:0}
+  .bp-lb-name{font-weight:600;font-size:.98rem}
+  .bp-lb-close{background:rgba(255,255,255,.16);color:#fff;border:none;border-radius:8px;
+    font-size:.85rem;font-weight:600;padding:8px 14px;cursor:pointer;font-family:'Noto Sans KR'}
+  .bp-lb-close:active{background:rgba(255,255,255,.28)}
+  .bp-lb-stage{flex:1;display:flex;align-items:center;justify-content:center;padding:0 12px;overflow:auto}
+  .bp-lb-stage img{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);background:#fff}
+  .bp-lb-hint{text-align:center;color:rgba(255,255,255,.6);font-size:.7rem;font-weight:300;
+    padding:12px 16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px));flex-shrink:0}
 </style>
 </head>
 <body>
-
+ 
 <header class="hero">
   <div class="in">
     <div class="eyebrow">Jeju · 2026.06.24–06.26</div>
@@ -185,11 +201,11 @@
     <div class="wx-note" id="wxNote">날씨 · Open-Meteo (실시간)</div>
   </div>
 </header>
-
+ 
 <!-- 일정 -->
 <section id="sched">
   <div class="sec-head"><span class="sec-num">01</span><h2>일정표</h2><span class="note">3일</span></div>
-
+ 
   <div class="day">
     <div class="day-head"><span class="day-date">06.24</span><span class="day-dow">수</span><span class="day-tag">이동 + KCC</span><span class="day-wx" data-wxdate="2026-06-24"></span></div>
     <div class="ev move"><span class="t">10:00<br>11:30</span><div><div class="w">육사 → 김포공항</div><div class="m"><span class="pill">밴</span>1시간 30분 · 서울 70자 2604</div></div></div>
@@ -202,7 +218,7 @@
     <div class="ev meal"><span class="t">18:20<br>21:00</span><div><div class="w">저녁 식사 · 일몰</div></div></div>
     <div class="ev"><span class="t">21:00~</span><div><div class="w">숙소 체크인</div><div class="m">리조트 산수휴 · A동</div></div></div>
   </div>
-
+ 
   <div class="day">
     <div class="day-head"><span class="day-date">06.25</span><span class="day-dow">목</span><span class="day-tag tbd">학회 본행사</span><span class="day-wx" data-wxdate="2026-06-25"></span></div>
     <div class="ev"><span class="t">10:00<br>12:00</span><div><div class="w">축구 시청</div></div></div>
@@ -211,7 +227,7 @@
     <div class="ev meal"><span class="t tbd">미정</span><div><div class="w">저녁 식사</div></div></div>
     <div class="ev"><span class="t tbd">미정</span><div><div class="w">숙소 이동·체크인</div></div></div>
   </div>
-
+ 
   <div class="day">
     <div class="day-head"><span class="day-date">06.26</span><span class="day-dow">금</span><span class="day-tag">발표 + 복귀</span><span class="day-wx" data-wxdate="2026-06-26"></span></div>
     <div class="ev hl"><span class="t">09:00<br>12:00</span><div><div class="w">춘계학술대회 — 포스터 발표</div><div class="m"><span class="pill">한라대</span>숙소 약 10분</div></div></div>
@@ -221,7 +237,7 @@
     <div class="ev move"><span class="t">16:50<br>19:00</span><div><div class="w">김포공항 → 육사</div></div></div>
   </div>
 </section>
-
+ 
 <!-- 주요 방문지 -->
 <section id="places">
   <div class="sec-head"><span class="sec-num">02</span><h2>주요 방문지</h2><span class="note">네이버 지도</span></div>
@@ -231,7 +247,7 @@
     <p class="places-hint">제주공항 · ICC · 애월 · 숙소 · 한라대 등 방문 예정지가 즐겨찾기로 공유되어 있습니다.</p>
   </div>
 </section>
-
+ 
 <!-- 숙소 -->
 <section id="lodge">
   <div class="sec-head"><span class="sec-num">03</span><h2>숙소</h2><span class="note">A동 · 6인</span></div>
@@ -243,7 +259,7 @@
     <div class="room"><div class="rn"><span class="dot"></span>스위트룸 2</div><span class="g">김상수 교수</span><span class="g">성호용 교수</span></div>
   </div>
 </section>
-
+ 
 <!-- 항공편 -->
 <section id="flight">
   <div class="sec-head"><span class="sec-num">04</span><h2>항공편</h2><span class="note">E-티켓·탑승권</span></div>
@@ -251,7 +267,7 @@
     <span class="bp-ic">ℹ️</span>
     <span><b>E-티켓</b>은 예약 증빙(항상 열림). <b>탑승권</b>은 출발 24시간 전부터 등록되며, 등록 전에는 '발권 전'으로 표시됩니다.</span>
   </div>
-
+ 
   <div class="fl-blk">
     <div class="fl-h"><span class="dir">출발편</span><span class="rt">김포 → 제주</span><span class="dt">06.24(수) · KE1121 · 13:25–14:40</span></div>
     <div class="pax"><span class="px-name">백승원</span><span class="px-meta">일반석(Y) · 56C · <span class="pnr">E2DFZJ</span></span><span class="px-amt">124,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_백승원_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_백승원_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
@@ -261,7 +277,7 @@
     <div class="pax"><span class="px-name">조성식</span><span class="px-meta"><span class="c">프레스티지(C)</span> · 8E · <span class="pnr">E2COH4</span></span><span class="px-amt">184,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_조성식_출발편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_조성식_출발편" data-dep="2026-06-24T13:25:00+09:00">탑승권</button></div></div>
     <div class="fl-sum">합계 <b>680,500원</b></div>
   </div>
-
+ 
   <div class="fl-blk">
     <div class="fl-h"><span class="dir">복귀편</span><span class="rt">제주 → 김포</span><span class="dt">06.26(금) · KE1246 · 15:30–16:50</span></div>
     <div class="pax"><span class="px-name">백승원</span><span class="px-meta">일반석(Y) · <span class="pnr">E2IXZH</span></span><span class="px-amt">138,100</span><div class="px-btns"><a class="tkbtn" href="eticket/e-Ticket_백승원_복귀편.pdf" target="_blank" rel="noopener">E-티켓</a><button class="bpbtn" data-bp="e-Ticket_백승원_복귀편" data-dep="2026-06-26T15:35:00+09:00">탑승권</button></div></div>
@@ -272,7 +288,7 @@
     <div class="fl-sum">합계 <b>750,500원</b></div>
   </div>
 </section>
-
+ 
 <!-- 학회 -->
 <section id="conf">
   <div class="sec-head"><span class="sec-num">05</span><h2>학회 정보</h2></div>
@@ -290,12 +306,12 @@
     </div>
   </div>
 </section>
-
+ 
 <footer>
   <div class="crest">제주 출장 일정</div>
   <div>조성식 · 백승원 · 신지윤 · 김상수 · 성호용 · 김현준</div>
 </footer>
-
+ 
 <nav class="tabs">
   <a href="#sched" class="active"><span class="ic">🗓️</span>일정</a>
   <a href="#places"><span class="ic">📍</span>방문지</a>
@@ -303,7 +319,19 @@
   <a href="#flight"><span class="ic">✈️</span>항공</a>
   <a href="#conf"><span class="ic">🎓</span>학회</a>
 </nav>
-
+ 
+<!-- 탑승권 팝업 (PNG) -->
+<div class="bp-lightbox" id="bpLightbox">
+  <div class="bp-lb-bar">
+    <span class="bp-lb-name" id="bpName">탑승권</span>
+    <button class="bp-lb-close" id="bpClose">✕ 닫기</button>
+  </div>
+  <div class="bp-lb-stage">
+    <img id="bpImg" alt="탑승권" />
+  </div>
+  <div class="bp-lb-hint">바깥을 누르면 닫힙니다 · 화면을 키우려면 이미지를 확대하세요</div>
+</div>
+ 
 <script>
 /* ---- weather (Open-Meteo, live) ---- */
 (function(){
@@ -353,8 +381,8 @@
     note.textContent='날씨 정보를 불러올 수 없습니다 (인터넷 필요)';
   });
 })();
-
-/* ---- boarding pass (boarding/ 폴더, 24h check) ---- */
+ 
+/* ---- boarding pass (boarding/ 폴더, PNG 팝업, 24h check) ---- */
 (function(){
   const BP_BASE='boarding/';
   const H=60*60*1000;
@@ -366,13 +394,28 @@
     const mi=String(open.getMinutes()).padStart(2,'0');
     return mm+'/'+dd+' '+ap+' '+hh+':'+mi;
   }
+  // 팝업(라이트박스) 요소
+  const lb=document.getElementById('bpLightbox');
+  const lbImg=document.getElementById('bpImg');
+  const lbName=document.getElementById('bpName');
+  function openLB(src,title){
+    lbImg.src=src; lbName.textContent=title;
+    lb.classList.add('open'); document.body.style.overflow='hidden';
+  }
+  function closeLB(){ lb.classList.remove('open'); document.body.style.overflow=''; lbImg.src=''; }
+  document.getElementById('bpClose').addEventListener('click',closeLB);
+  lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && lb.classList.contains('open')) closeLB(); });
+ 
   document.querySelectorAll('.bpbtn').forEach(btn=>{
-    const file=btn.getAttribute('data-bp')+'.pdf';
+    const base=btn.getAttribute('data-bp');      // 예: e-Ticket_김현준_출발편
+    const file=base+'.png';                       // 탑승권은 PNG
     const dep=btn.getAttribute('data-dep');
     const url=BP_BASE+encodeURIComponent(file);
     const now=new Date();
     const opensAt=new Date(new Date(dep).getTime()-24*H);
     const before24h = now < opensAt;
+    const nm=base.replace('e-Ticket_','').replace('_',' ');  // 김현준 출발편
     btn.classList.add('checking'); btn.textContent='확인 중';
     const probe=fetch(url,{method:'HEAD',cache:'no-store'}).then(r=>r.ok)
       .catch(()=>fetch(url,{method:'GET',cache:'no-store'}).then(r=>r.ok).catch(()=>false));
@@ -380,7 +423,7 @@
       btn.classList.remove('checking');
       if(exists){
         btn.classList.add('ready'); btn.textContent='탑승권';
-        btn.addEventListener('click',()=>window.open(url,'_blank','noopener'));
+        btn.addEventListener('click',()=>openLB(url, nm+' 탑승권'));
       } else {
         btn.classList.add('pending'); btn.textContent='발권 전';
         btn.addEventListener('click',()=>{
@@ -392,7 +435,7 @@
     });
   });
 })();
-
+ 
 /* ---- bottom tab active on scroll ---- */
 (function(){
   const tabLinks=[...document.querySelectorAll('nav.tabs a')];
@@ -406,6 +449,7 @@
   tabTargets.forEach(t=>{ if(t) io.observe(t); });
 })();
 </script>
-
+ 
 </body>
 </html>
+ 
